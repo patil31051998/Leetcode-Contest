@@ -3,12 +3,10 @@ class Solution {
         int[] nextValidDay = fillNextValidDay(days);
         int[] dp = new int[days[days.length - 1] + 1];
         Arrays.fill(dp, -1);
-        // System.out.println(Arrays.toString(nextValidDay));
         return mincostTickets(nextValidDay, costs, days[0], days[days.length - 1], dp);
     }
 
     public int mincostTickets(int[] nextValidDay, int[] costs, int currDay, int lastDay, int[] dp) {
-        // System.out.println(currDay);
         if(currDay > lastDay) {
             return 0;
         }
@@ -24,7 +22,6 @@ class Solution {
         if(currDay + 30 <= lastDay) {
             monthCost += mincostTickets(nextValidDay, costs, nextValidDay[currDay + 29], lastDay, dp);
         }
-        // System.out.println(currDay + ":" + dayCost + ":" + weekCost + ":" + monthCost);
         return dp[currDay] = Math.min(dayCost, Math.min(weekCost, monthCost));
     }
 
