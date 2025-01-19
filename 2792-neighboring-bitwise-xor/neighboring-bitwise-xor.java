@@ -4,12 +4,7 @@ class Solution {
         last = 0;
         for(i = 0; i < derived.length; i++) {
             if(derived[i] == 1) {
-                if(last == 0) {
-                    last = 1;
-                }
-                else {
-                    last = 0;
-                }
+                last = ~last;
             }
         }
         return last == 0;
