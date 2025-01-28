@@ -3,11 +3,11 @@ class Solution {
         int[] dx = {1, -1, 0, 0};
         int[] dy = {0, 0, 1, -1};
         int i, j, max;
+        int[][] visited = new int[grid.length][grid[0].length];
         max = 0;
         for(i = 0; i < grid.length; i++) {
             for(j = 0; j < grid[0].length; j++) {
                 if(grid[i][j] > 0) {
-                    int[][] visited = new int[grid.length][grid[0].length];
                     max = Math.max(max, findMaxFish(grid, i, j, dx, dy, visited));
                 }
             }
