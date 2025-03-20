@@ -1,9 +1,6 @@
 class Solution {
     public int[] minimumCost(int n, int[][] edges, int[][] query) {
         List<List<int[]>> adjList = getAdjList(n, edges);
-        for(int[] data : adjList.get(1)) {
-            System.out.println(Arrays.toString(data));
-        }
         Map<Integer, Integer> componentValMap = new HashMap<>();
         int[] component = new int[n];
         int[] res = new int[query.length];
