@@ -37,14 +37,13 @@ class Solution {
         while(!queue.isEmpty()) {
             Data curr = queue.remove();
             for(int[] adj : adjList.get(curr.getNode())) {
-                
+                if(distance[adj[0]] == curr.getdist() + adj[1]) {
+                    ways[adj[0]] = (ways[adj[0]] + ways[curr.getNode()]) % MOD;
+                }
                 if(distance[adj[0]] > curr.getdist() + adj[1]) {
                     ways[adj[0]] = ways[curr.getNode()];
                     distance[adj[0]] = curr.getdist() + adj[1];
                     queue.add(new Data(adj[0], distance[adj[0]]));
-                }
-                else if(distance[adj[0]] == curr.getdist() + adj[1]) {
-                    ways[adj[0]] = (ways[adj[0]] + ways[curr.getNode()]) % MOD;
                 }
             }
         }
