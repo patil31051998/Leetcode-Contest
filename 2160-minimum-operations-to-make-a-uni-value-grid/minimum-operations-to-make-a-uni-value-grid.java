@@ -9,12 +9,7 @@ class Solution {
             }
         }
         Arrays.sort(data);
-        if(data.length % 2 == 1) {
-            mid = data.length / 2;
-        }
-        else {
-            mid = (data.length - 1) / 2;
-        }
+        mid = data.length / 2;
         for(i = 0; i < data.length; i++) {
             if(Math.abs(data[i] - data[mid]) % x != 0) {
                 return -1;
