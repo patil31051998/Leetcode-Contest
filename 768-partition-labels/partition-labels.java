@@ -8,9 +8,7 @@ class Solution {
         Arrays.fill(end, -1);
         for(i = 0; i < s.length(); i++) {
             char ch = s.charAt(i);
-            if(start[ch - 'a'] == -1) {
-                start[ch - 'a'] = i; 
-            }
+            start[ch - 'a'] = start[ch - 'a'] == -1 ? i : start[ch - 'a'];
             end[ch - 'a'] = i;
         }
         int currStart, currEnd;
