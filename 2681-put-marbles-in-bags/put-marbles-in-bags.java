@@ -1,18 +1,24 @@
 class Solution {
     public long putMarbles(int[] weights, int k) {
         int i;
-        int[] sum = new int[weights.length];
+        PriorityQueue<Integer> maxPq = new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Integer> minPq = new PriorityQueue<>();
+        long maxSum, minSum;
+        maxSum = minSum = 0L;
         for(i = 0; i < weights.length - 1; i++) {
-            sum[i] =  weights[i] + weights[i + 1];
+            maxPq.add(weights[i] + weights[i + 1]);
+            if(maxPq.size() > k - 1) {
+                maxPq.remove();
+            }
+            minPq.add(weights[i] + weights[i + 1]);
+            if(minPq.size() > k - 1) {
+                minPq.remove();
+            }
         }
-        Arrays.sort(sum);
-        long max, min;
-        max = min = 0;
-        // System.out.println(Arrays.toString(sum));
-        for(i = 0; i < k - 1; i++) {
-            min += sum[i + 1];
-            max += sum[weights.length - i - 1];
+        while(!maxPq.isEmpty()) {
+            minSum += maxPq.remove();
+            maxSum += minPq.remove();
         }
-        return max - min;
+        return maxSum - minSum;
     }
 }
