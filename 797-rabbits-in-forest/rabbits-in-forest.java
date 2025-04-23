@@ -13,7 +13,7 @@ class Solution {
         for(Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
             int val = entry.getKey() + 1;
             if(entry.getValue() % val == 0) {
-                res += (entry.getValue() / val) * val;
+                res += entry.getValue();
             }
             else {
                 res += ((entry.getValue() / val) + 1) * val;
