@@ -11,11 +11,12 @@ class Solution {
             countMap.put(answers[i], countMap.getOrDefault(answers[i], 0) + 1);
         }
         for(Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
-            if(entry.getValue() % (entry.getKey() + 1) == 0) {
-                res += (entry.getValue() / (entry.getKey() + 1)) * (entry.getKey() + 1);
+            int val = entry.getKey() + 1;
+            if(entry.getValue() % val == 0) {
+                res += (entry.getValue() / val) * val;
             }
             else {
-                res += ((entry.getValue() / (entry.getKey() + 1)) + 1) * (entry.getKey() + 1);
+                res += ((entry.getValue() / val) + 1) * val;
             }
         }
         return res;
