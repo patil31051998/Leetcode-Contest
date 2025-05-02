@@ -28,27 +28,20 @@ class Solution {
                 curr++;
             }
         }
-        // System.out.println(leftDomino);
-        // System.out.println(rightDomino);
         for(i = 0; i < dominoes.length(); i++) {
             if(dominoes.charAt(i) != '.' ) {
-                // System.out.println("0");
                 result.append(dominoes.charAt(i));
             }
             else if(leftDomino.charAt(i) == '.' && rightDomino.charAt(i) == '.') {
-                // System.out.println("1");
                 result.append(".");
             }
             else if(leftDomino.charAt(i) == rightDomino.charAt(i)) {
-                // System.out.println("2");
                 result.append(".");
             }
             else if(leftDomino.charAt(i) != '.' && rightDomino.charAt(i) != '.') {
-                // System.out.println("3");
                 result.append(leftDomino.charAt(i) < rightDomino.charAt(i) ? 'L' : 'R');
             }
             else {
-                // System.out.println("4");
                 result.append(leftDomino.charAt(i) != '.' ? 'L': 'R');
             }
         }
