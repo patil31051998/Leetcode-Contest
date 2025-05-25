@@ -7,7 +7,6 @@ class Solution {
         for(String word : words) {
             currWords.put(word, currWords.getOrDefault(word, 0) + 1);
         }
-        // System.out.println(currWords);
         for(Map.Entry<String, Integer> entry : currWords.entrySet()) {
             if(usedWords.contains(entry.getKey())) {
                 continue;
