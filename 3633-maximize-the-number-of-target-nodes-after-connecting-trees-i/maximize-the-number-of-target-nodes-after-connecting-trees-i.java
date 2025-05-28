@@ -1,86 +1,70 @@
 class Solution {
     public int[] maxTargetNodes(int[][] edges1, int[][] edges2, int k) {
-        List<List<Integer>> adj1 = getAdjList(edges1);
-        List<List<Integer>> adj2 = getAdjList(edges2);
-        int tree2MaxTraget = getMaxTargetNode(adj2, k - 1);
-        System.out.println(tree2MaxTraget);
-        int[] res = new int[edges1.length + 1];
-        if(k == 0) {
-            Arrays.fill(res, 1);
-            return res;
+        List<List<Integer>> adj1 = buildAdjList(edges1);
+        List<List<Integer>> adj2 = buildAdjList(edges2);
+
+        int maxReachableInTree2 = bfsMaxReachableNodes(adj2, k - 1);
+        int n = edges1.length + 1;
+        int[] result = new int[n];
+
+        if (k == 0) {
+            Arrays.fill(result, 1);
+            return result;
         }
-        int i;
-        for(i = 0; i <= edges1.length; i++) {
-            Queue<Integer> queue = new LinkedList<>();
-            int count = 0;
-            int currNodeCount = 0;
-            queue.add(i);
-            Set<Integer> visited = new HashSet<>();
-            visited.add(i);
-            while(count <= k) {
-                int size = queue.size();
-                while(size > 0) {
-                    int val = queue.remove();
-                    currNodeCount++;
-                    for(int adj : adj1.get(val)) {
-                        if(!visited.contains(adj)) {
-                            visited.add(adj);
-                            queue.add(adj);
-                        }
-                    }
-                    size--;
-                }
-                count++;
-            }
-            res[i] = currNodeCount + tree2MaxTraget;
+
+        for (int i = 0; i < n; i++) {
+            int reachableFromNode = bfsNodeCount(adj1, i, k);
+            result[i] = reachableFromNode + maxReachableInTree2;
         }
-        return res;
+
+        return result;
     }
 
-    private int getMaxTargetNode(List<List<Integer>> adj, int k) {
-        if(k == 0) {
-            return 1;
-        }
-        int maxNodeCount = 0;
-        int i;
-        for(i = 0; i < adj.size(); i++) {
-            Queue<Integer> queue = new LinkedList<>();
-            int count = 0;
-            int currNodeCount = 0;
-            queue.add(i);
-            Set<Integer> visited = new HashSet<>();
-            visited.add(i);
-            while(count <= k) {
-                int size = queue.size();
-                while(size > 0) {
-                    int val = queue.remove();
-                    currNodeCount++;
-                    for(int nei : adj.get(val)) {
-                        if(!visited.contains(nei)) {
-                            visited.add(nei);
-                            queue.add(nei);
-                        }
+    private int bfsNodeCount(List<List<Integer>> adj, int start, int k) {
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+        queue.offer(start);
+        visited.add(start);
+
+        int depth = 0, nodeCount = 0;
+
+        while (!queue.isEmpty() && depth <= k) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int node = queue.poll();
+                nodeCount++;
+                for (int neighbor : adj.get(node)) {
+                    if (visited.add(neighbor)) {
+                        queue.offer(neighbor);
                     }
-                    size--;
                 }
-                count++;
             }
-            maxNodeCount = Math.max(maxNodeCount, currNodeCount);
+            depth++;
         }
-        return maxNodeCount;
+
+        return nodeCount;
     }
-    
-    
-    private List<List<Integer>> getAdjList(int[][] edges) {
+
+    private int bfsMaxReachableNodes(List<List<Integer>> adj, int k) {
+        int maxNodes = 0;
+        for (int i = 0; i < adj.size(); i++) {
+            maxNodes = Math.max(maxNodes, bfsNodeCount(adj, i, k));
+        }
+        return maxNodes;
+    }
+
+    private List<List<Integer>> buildAdjList(int[][] edges) {
+        int n = edges.length + 1;
         List<List<Integer>> adjList = new ArrayList<>();
-        int i;
-        for(i = 0; i <= edges.length; i++) {
+        for (int i = 0; i < n; i++) {
             adjList.add(new ArrayList<>());
         }
-        for(int[] edge : edges) {
+
+        for (int[] edge : edges) {
             adjList.get(edge[0]).add(edge[1]);
             adjList.get(edge[1]).add(edge[0]);
         }
+
         return adjList;
     }
 }
