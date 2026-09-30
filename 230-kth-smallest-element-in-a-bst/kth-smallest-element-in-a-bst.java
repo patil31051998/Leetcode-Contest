@@ -14,11 +14,22 @@
  * }
  */
 class Solution {
+
+    int count = 0;
+
     public int kthSmallest(TreeNode root, int k) {
-        int[] curr = {k};
-        int[] res = {0};
-        kthSmallest (root, curr, res);
-        return res[0];
+        if(root == null) {
+            return -1;
+        }
+        int left = kthSmallest(root.left, k);
+        if(left != -1) {
+            return left;
+        }
+        count++;
+        if(k == count) {
+            return root.val;
+        }
+        return kthSmallest(root.right, k);
     }
 
     public void kthSmallest(TreeNode root, int[] curr, int[] res) {
