@@ -14,26 +14,39 @@
  * }
  */
 class Solution {
+
+    int currStreak = 0;
+    int maxStreak = 0;
+    int currNum = 0;
+    List<Integer> res = new ArrayList<>();
+
     public int[] findMode(TreeNode root) {
-        Map<Integer, Integer> countMap = new TreeMap<>();
-        int[] maxCount = {0};
-        getCount(root, countMap, maxCount);
-        List<Integer> res = new ArrayList<>();
-        for(Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
-            if(entry.getValue() == maxCount[0]) {
-                res.add(entry.getKey());
-            }
+        dfs(root);
+        int[] maxElement = new int[res.size()];
+        for(int i = 0; i < res.size(); i++) {
+            maxElement[i] = res.get(i);
         }
-        return res.stream().mapToInt(Integer::intValue).toArray();
+        return maxElement;
     }
 
-    public void getCount(TreeNode root, Map<Integer, Integer> countMap, int[] maxCount) {
+    public void dfs(TreeNode root) {
         if(root == null) {
             return;
         }
-        countMap.put(root.val, countMap.getOrDefault(root.val, 0) + 1);
-        maxCount[0] = Math.max(maxCount[0], countMap.get(root.val));
-        getCount(root.left, countMap, maxCount);
-        getCount(root.right, countMap, maxCount);
+        dfs(root.left);
+        if(root.val == currNum) {
+            currStreak++;
+        } else {
+            currNum = root.val;
+            currStreak = 1;
+        }
+        if(currStreak > maxStreak) {
+            maxStreak = currStreak;
+            res = new ArrayList<>();
+        }
+        if(currStreak == maxStreak) {
+            res.add(currNum);
+        }
+        dfs(root.right);
     }
 }
