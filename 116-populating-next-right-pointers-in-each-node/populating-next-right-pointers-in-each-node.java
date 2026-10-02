@@ -30,8 +30,8 @@ class Solution {
         if(root.next != null) {
             root.right.next = root.next.left;
         }
-        connect(root.left);
         connect(root.right);
+        connect(root.left);
         return root;
     }
 }
