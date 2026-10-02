@@ -26,26 +26,34 @@ class Solution {
         if(root == null) {
             return root;
         }
+        
         if(root.left != null) {
-            Node leftNext = root.right;
-            Node curr = root;
-            while(leftNext == null && curr.next != null) {
-                leftNext = curr.next.left != null ? curr.next.left : curr.next.right;
-                curr = curr.next;
+            if(root.right != null) {
+                root.left.next = root.right;
+            } else {
+                root.left.next = findNextNode(root.next);
             }
-            root.left.next = leftNext;
         }
-        Node rightNext = null;
-        Node curr = root;
-        while(rightNext == null && curr.next != null) {
-            rightNext = curr.next.left != null ? curr.next.left : curr.next.right;
-            curr = curr.next;
-        }
+        
         if(root.right != null) {
-            root.right.next = rightNext;
+            root.right.next = findNextNode(root.next);
         }
+
         connect(root.right);
         connect(root.left);
         return root;
+    }
+
+    private Node findNextNode(Node root) {
+        while(root != null) {
+            if(root.left != null) {
+                return root.left;
+            } 
+            if(root.right != null) {
+                return root.right;
+            }
+            root = root.next;
+        }
+        return null;
     }
 }
