@@ -23,10 +23,6 @@ class Solution {
             return 0;
         }
         if(root.left == null && root.right == null) {
-            return Integer.valueOf(root == null ? curr : curr + root.val);
-        }
-        if(root.left == null && root.right == null) {
-            System.out.println(curr + root.val);
             return Integer.valueOf(curr + root.val);
         }
         int left = sumNumbers(root.left, curr + root.val);
