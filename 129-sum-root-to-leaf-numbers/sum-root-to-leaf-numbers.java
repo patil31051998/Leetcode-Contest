@@ -15,21 +15,19 @@
  */
 class Solution {
     public int sumNumbers(TreeNode root) {
-        StringBuilder curr = new StringBuilder("");
-        return sumNumbers(root, curr);
+        return sumNumbers(root, 0);
     }
 
-    public int sumNumbers(TreeNode root, StringBuilder curr) {
+    public int sumNumbers(TreeNode root, int curr) {
         if(root == null) {
             return 0;
         }
+        int sum = curr * 10 + root.val;
         if(root.left == null && root.right == null) {
-            return Integer.valueOf(curr.toString() + root.val);
+            return sum;
         }
-        curr.append(root.val);
-        int left = sumNumbers(root.left, curr);
-        int right = sumNumbers(root.right, curr);
-        curr.deleteCharAt(curr.length() - 1);
+        int left = sumNumbers(root.left, sum);
+        int right = sumNumbers(root.right, sum);
         return left + right;
     }
 }
