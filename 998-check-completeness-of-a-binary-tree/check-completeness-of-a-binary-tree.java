@@ -15,28 +15,19 @@
  */
 class Solution {
     public boolean isCompleteTree(TreeNode root) {
+        boolean isNullFound = false;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
-        boolean isNullFound = false;
         while(!queue.isEmpty()) {
             TreeNode curr = queue.remove();
-            if(curr.left == null) {
+            if(curr == null) {
                 isNullFound = true;
             } else {
                 if(isNullFound) {
                     return false;
-                } else {
-                    queue.add(curr.left);
                 }
-            }
-            if(curr.right == null) {
-                isNullFound = true;
-            } else {
-                if(isNullFound) {
-                    return false;
-                } else {
-                    queue.add(curr.right);
-                }
+                queue.add(curr.left);
+                queue.add(curr.right);
             }
         }
         return true;
